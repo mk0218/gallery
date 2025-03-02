@@ -1,1 +1,5 @@
-export const DESKTOP_MIN_WIDTH = 900;
+export const Breakpoint = {
+	SM: 768,
+	MD: 1024,
+	LG: 1200,
+};

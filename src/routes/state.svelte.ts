@@ -1,14 +1,18 @@
-import { DESKTOP_MIN_WIDTH } from '$lib/constants';
+interface AppState {
+	deviceWidth: number;
+	isDarkMode: boolean;
+}
 
-export const appState = $state({
+export const appState: AppState = $state({
+	deviceWidth: 0,
 	isDarkMode: false,
-	isDesktop: false
+	isDesktop: false,
 });
+
+export function setDeviceWidth(innerWidth: number) {
+	appState.deviceWidth = innerWidth;
+}
 
 export function toggleDarkMode() {
 	appState.isDarkMode = !appState.isDarkMode;
-}
-
-export function setIsDesktop(innerWidth: number) {
-	appState.isDesktop = innerWidth >= DESKTOP_MIN_WIDTH;
 }

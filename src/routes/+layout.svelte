@@ -1,20 +1,22 @@
 <script>
 	import Navbar from '$lib/components/Navbar.svelte';
-	import { appState, setIsDesktop } from './state.svelte';
+	import { appState, setDeviceWidth } from './state.svelte';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
 	let innerWidth = $state(0);
-	$effect(() => setIsDesktop(innerWidth));
+	$effect(() => setDeviceWidth(innerWidth));
 	$effect(function initDarkMode() {
 		if (window) {
 			appState.isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 		}
 	});
+
+	const { categories } = $derived(data);
 </script>
 
 <div id="root" class:dark={appState.isDarkMode}>
-	<Navbar />
+	<Navbar {categories} />
 	<div class="contents">
 		{#if children}
 			{@render children()}
@@ -55,6 +57,8 @@
 	:global(#root) {
 		width: 100vw;
 		height: 100vh;
+		overflow-x: hidden;
+		overflow-y: scroll;
 		background-color: var(--color-bg);
 		color: var(--color-fg);
 	}

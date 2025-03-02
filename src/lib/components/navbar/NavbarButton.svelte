@@ -3,23 +3,35 @@
 	import Icon from '../Icon.svelte';
 
 	interface Props {
-		icon: string;
+		icon?: string;
+		text?: string;
+		large?: boolean;
 		onclick?: MouseEventHandler<HTMLButtonElement>;
 	}
 
-	let { icon, onclick }: Props = $props();
+	let { icon, text, large = false, onclick }: Props = $props();
 </script>
 
-<button {onclick}>
-	<Icon {icon} />
+<button {onclick} class:large>
+	{#if icon}<Icon {icon} />{/if}
+	{#if text}<span>{text} </span>{/if}
 </button>
 
 <style>
 	button {
 		background: none;
 		border: none;
-		width: 46px;
+		min-width: 46px;
 		height: 46px;
 		padding: 0;
+		cursor: pointer;
+		color: inherit;
+		font-size: 1.2em;
+	}
+
+	button.large {
+		min-width: 54px;
+		height: 54px;
+		font-size: 1.4em;
 	}
 </style>

@@ -1,9 +1,13 @@
 <script lang="ts">
-	import { DESKTOP_MIN_WIDTH } from '$lib/constants';
-	import { slide } from 'svelte/transition';
 	import NavbarButton from './navbar/NavbarButton.svelte';
-	import Switch from './Switch.svelte';
 	import { appState, toggleDarkMode } from '../../routes/state.svelte';
+	import { Breakpoint } from '$lib/constants';
+
+	interface Props {
+		categories?: string[];
+	}
+
+	const { categories = [] }: Props = $props();
 
 	let innerWidth = $state(0);
 
@@ -23,7 +27,33 @@
 	});
 </script>
 
-{#if appState.isDesktop}
+{#if appState.deviceWidth < Breakpoint.MD}
+	<!-- Mobile -->
+	<nav>
+		<NavbarButton icon="menu" onclick={toggleMenu} />
+		<NavbarButton icon="home" />
+		<NavbarButton icon="tune" />
+	</nav>
+	{#if showMenu}
+		<!-- <div class="menu" in:slide={{ axis: 'x', duration: 2000 }}> -->
+		<div class="menu" class:xs={appState.deviceWidth < Breakpoint.SM} bind:this={menu}>
+			<span class="close">
+				<NavbarButton icon="close" onclick={toggleMenu} />
+			</span>
+			<!-- <label class="toggle-mode">
+				<span>Dark Mode</span>
+				<Switch on={appState.isDarkMode} onclick={toggleDarkMode} />
+			</label> -->
+			<div class="categories">
+				<NavbarButton large text="Home" />
+				{#each categories as category}
+					<NavbarButton large text={category} />
+				{/each}
+			</div>
+		</div>
+	{/if}
+{:else}
+	<!-- Desktop -->
 	<nav>
 		<span class="left">
 			<NavbarButton icon="home" />
@@ -32,24 +62,6 @@
 			<NavbarButton icon="person" />
 		</span>
 	</nav>
-{:else}
-	<nav>
-		<NavbarButton icon="menu" onclick={toggleMenu} />
-		<NavbarButton icon="home" />
-		<NavbarButton icon="tune" />
-	</nav>
-	{#if showMenu}
-		<!-- <div class="menu" in:slide={{ axis: 'x', duration: 2000 }}> -->
-		<div class="menu" bind:this={menu}>
-			<span class="close">
-				<NavbarButton icon="close" onclick={toggleMenu} />
-			</span>
-			<span class="toggle-mode">
-				랄랄라울랄라
-				<Switch on={appState.isDarkMode} onclick={toggleDarkMode} />
-			</span>
-		</div>
-	{/if}
 {/if}
 
 <svelte:window bind:innerWidth />
@@ -81,11 +93,15 @@
 		height: 100vh;
 		background-color: var(--color-bg);
 		box-shadow: 0.5px 0 0.5px var(--color-shadow);
-		padding: 120px 40px;
+		padding-top: 160px;
 		overflow: hidden;
 
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
 		/* transform: translateX(-100vw); */
-		transition: transform 1s;
+		/* transition: transform 1s; */
 	}
 
 	span.close {
@@ -93,4 +109,26 @@
 		top: 12px;
 		right: 12px;
 	}
+
+	.categories {
+		width: 60%;
+		/* max-width: 320px; */
+		/* flex: 0 1 280px; */
+		display: flex;
+		align-items: baseline;
+		flex-direction: column;
+	}
+
+	.xs > .categories {
+		width: 70%;
+	}
+
+	/* .toggle-mode {
+		display: flex;
+		align-items: center;
+
+		& > *:first-child {
+			margin-right: 10px;
+		}
+	} */
 </style>

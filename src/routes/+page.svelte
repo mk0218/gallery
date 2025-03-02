@@ -1,7 +1,7 @@
 <script lang="ts">
-	const { data } = $props();
+	// const { data } = $props();
 
-	const categories = $derived(data.categories);
+	// const { categories, keys } = $derived(data);
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -12,6 +12,10 @@
 <p style="color: var(--color-gray4)">gray4</p>
 <p style="color: var(--color-gray5)">gray5</p>
 
-{#each categories as category}
+<!-- {#each categories as category}
 	<p>{category}</p>
 {/each}
+{#each keys as key}
+	<p>{key}</p>
+{/each}
+<img src={data.image} alt={data.image} /> -->
