@@ -7,11 +7,11 @@ export async function getCategories() {
 	return result.map((r) => r.category);
 }
 
-export async function getImagesByCategories(categories: string[]) {
+export async function getImgUrlByCategories(categories: string[]) {
 	const sql = neon(DATABASE_URL);
 	const result = await sql`
-		SELECT key FROM images
+		SELECT url FROM images
 		WHERE category = ANY(${categories})
 	`;
-	return result.map((r) => r.key);
+	return result.map((r) => r.url);
 }

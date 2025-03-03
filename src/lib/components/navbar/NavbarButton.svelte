@@ -13,7 +13,7 @@
 </script>
 
 <button {onclick} class:large>
-	{#if icon}<Icon {icon} />{/if}
+	{#if icon}<Icon {icon} />{/if}&nbsp;
 	{#if text}<span>{text} </span>{/if}
 </button>
 
@@ -27,6 +27,9 @@
 		cursor: pointer;
 		color: inherit;
 		font-size: 1.2em;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 	}
 
 	button.large {

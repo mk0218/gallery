@@ -40,6 +40,14 @@
 			<span class="close">
 				<NavbarButton icon="close" onclick={toggleMenu} />
 			</span>
+			<div class="controls">
+				{#if appState.isDarkMode}
+					<NavbarButton icon="light_mode" text="Light Mode" />
+				{:else}
+					<NavbarButton icon="dark_mode" text="Dark Mode" />
+				{/if}
+				<NavbarButton icon="person" text="Log in" />
+			</div>
 			<!-- <label class="toggle-mode">
 				<span>Dark Mode</span>
 				<Switch on={appState.isDarkMode} onclick={toggleDarkMode} />
@@ -93,7 +101,7 @@
 		height: 100vh;
 		background-color: var(--color-bg);
 		box-shadow: 0.5px 0 0.5px var(--color-shadow);
-		padding-top: 160px;
+		padding-top: 140px;
 		overflow: hidden;
 
 		display: flex;
@@ -102,6 +110,10 @@
 
 		/* transform: translateX(-100vw); */
 		/* transition: transform 1s; */
+
+		&.xs {
+			padding-top: 100px;
+		}
 	}
 
 	span.close {
@@ -110,6 +122,11 @@
 		right: 12px;
 	}
 
+	.controls {
+		margin-bottom: 26px;
+	}
+
+	.controls,
 	.categories {
 		width: 60%;
 		/* max-width: 320px; */
@@ -119,7 +136,8 @@
 		flex-direction: column;
 	}
 
-	.xs > .categories {
+	.xs > .categories,
+	.xs > .controls {
 		width: 70%;
 	}
 
